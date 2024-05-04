@@ -1,6 +1,7 @@
 <?php
-require_once '../config/Database.php';
-require_once '../entity/Usuario.php';
+require_once 'config/Database.php';
+require_once 'entity/Usuario.php';
+require_once 'BaseDAO.php';
 
 class UsuarioDAO implements BaseDAO
 {
@@ -49,14 +50,15 @@ class UsuarioDAO implements BaseDAO
         }
     }
 
-    public function getAll() {
+    public function getAll()
+    {
         try {
             // Preparar a consulta SQL
             $sql = "SELECT * FROM Usuario";
 
             // Preparar a instrução
             $stmt = $this->db->prepare($sql);
-           
+
             // Executa a instrução
             $stmt->execute();
 
@@ -64,30 +66,63 @@ class UsuarioDAO implements BaseDAO
             $usuarios = $stmt->fetch(PDO::FETCH_ASSOC);
 
             return array_map(function ($usuario) {
-                return new Usuario($usuario['Id'],
-                $usuario['NomeUsuario'], 
-                $usuario['Senha'], 
-                $usuario['Email'], 
-                $usuario['GrupoUsuarioID'],
-                $usuario['Ativo'],
-                $usuario['DataCriacao'],
-                $usuario['DataAtualizacao']);
+                return new Usuario(
+                    $usuario['Id'],
+                    $usuario['NomeUsuario'],
+                    $usuario['Senha'],
+                    $usuario['Email'],
+                    $usuario['GrupoUsuarioID'],
+                    $usuario['Ativo'],
+                    $usuario['DataCriacao'],
+                    $usuario['DataAtualizacao']
+                );
             }, $usuarios);
-
-            
         } catch (PDOException $e) {
             return null;
         }
     }
-    public function create($entity)
+
+    public function create($usuario) {
+        try {
+            // Preparar a consulta SQL
+            $sql = "INSERT INTO Usuario( NomeUsuario , Senha , Email , GrupoUsuarioID , Ativo , DataCriacao , DataAtualizacao , UsuarioAtualizacao )
+                    VALUES(:nomeUsuario, :senha, :email, :grupoUsuarioID, :ativo, current_timestamp(),current_timestamp(),null)";
+
+            // Preparar a instrução
+            $stmt = $this->db->prepare($sql);
+
+            // Vincular parâmetros
+            $stmt->bindParam(':nomeUsuario', $usuario->getNomeUsuario());
+            $stmt->bindParam(':senha', $usuario->getSenha());
+            $stmt->bindParam(':email', $usuario->getEmail());
+            $stmt->bindParam(':grupoUsuarioID', $usuario->getGrupoUsuarioId());
+            $stmt->bindParam(':ativo', $usuario->getAtivo());
+            
+            // Executar a instrução
+            $stmt->execute();
+
+            // Retornar verdadeiro se a inserção for bem sucedida
+            return true;
+        } catch (PDOException $e) {
+            // TO-DO: implementar log
+            return false;
+        }
+    }
+
+    public function update($usuario)
     {
     }
 
-    public function update($entity)
-    {
-    }
+    public function delete($id) {
+        try{
+            $sql = "DELETE * FROM Usuario WHERE Id = :id";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
 
-    public function delete($id)
-    {
+            return true;
+        } catch (PDOException $e){
+            return false;
+        }
     }
 }
