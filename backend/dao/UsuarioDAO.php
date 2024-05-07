@@ -1,4 +1,5 @@
 <?php
+
 require_once 'config/Database.php';
 require_once 'entity/Usuario.php';
 require_once 'BaseDAO.php';
@@ -15,23 +16,22 @@ class UsuarioDAO implements BaseDAO
     public function getById($id)
     {
         try {
-            //Preparando Consulta SQL
+            // Preparar a consulta SQL
             $sql = "SELECT * FROM Usuario WHERE Id = :id";
 
-            //Preparando a Instrução
+            // Preparar a instrução
             $stmt = $this->db->prepare($sql);
 
-            // Vincular Parâmetro
+            // Vincular parâmetros
             $stmt->bindParam(':id', $id);
 
-            //Executa a instrução
+            // Executa a instrução
             $stmt->execute();
 
-            //Obtem o usuario encontrado
+            // Obtem o usuario encontrado;
             $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-
-            //Retorna o usuario encontradp
+            // Retorna o usuário encontrado
             return $usuario ?
                 new Usuario(
                     $usuario['Id'],
@@ -46,7 +46,6 @@ class UsuarioDAO implements BaseDAO
                 : null;
         } catch (PDOException $e) {
             return null;
-            // framework.log($e, DateTime(), userID, $id)
         }
     }
 
@@ -59,12 +58,13 @@ class UsuarioDAO implements BaseDAO
             // Preparar a instrução
             $stmt = $this->db->prepare($sql);
 
-            // Executa a instrução
+            // Executar a instrução
             $stmt->execute();
 
-            // Obtem o usuario encontrado;
-            $usuarios = $stmt->fetch(PDO::FETCH_ASSOC);
+            // Obter todos os usuários encontrados
+            $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+            // Retornar os usuários encontrados
             return array_map(function ($usuario) {
                 return new Usuario(
                     $usuario['Id'],
@@ -78,11 +78,13 @@ class UsuarioDAO implements BaseDAO
                 );
             }, $usuarios);
         } catch (PDOException $e) {
-            return null;
+            return [];
         }
     }
 
-    public function create($usuario) {
+
+    public function create($usuario)
+    {
         try {
             // Preparar a consulta SQL
             $sql = "INSERT INTO Usuario( NomeUsuario , Senha , Email , GrupoUsuarioID , Ativo , DataCriacao , DataAtualizacao , UsuarioAtualizacao )
@@ -91,13 +93,19 @@ class UsuarioDAO implements BaseDAO
             // Preparar a instrução
             $stmt = $this->db->prepare($sql);
 
-            // Vincular parâmetros
-            $stmt->bindParam(':nomeUsuario', $usuario->getNomeUsuario());
-            $stmt->bindParam(':senha', $usuario->getSenha());
-            $stmt->bindParam(':email', $usuario->getEmail());
-            $stmt->bindParam(':grupoUsuarioID', $usuario->getGrupoUsuarioId());
-            $stmt->bindParam(':ativo', $usuario->getAtivo());
-            
+            // Bind parameters by reference
+            $nomeUsuario = $usuario->getNomeUsuario();
+            $senha = $usuario->getSenha();
+            $email = $usuario->getEmail();
+            $grupoUsuarioID = $usuario->getGrupoUsuarioId();
+            $ativo = $usuario->getAtivo();
+
+            $stmt->bindParam(':nomeUsuario', $nomeUsuario);
+            $stmt->bindParam(':senha', $senha);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':grupoUsuarioID', $grupoUsuarioID);
+            $stmt->bindParam(':ativo', $ativo);
+
             // Executar a instrução
             $stmt->execute();
 
@@ -109,13 +117,14 @@ class UsuarioDAO implements BaseDAO
         }
     }
 
-    public function update($usuario) {
+    public function update($usuario)
+    {
         try {
             // Verifico se o usuário existe no banco de dados
             $existingUser = $this->getById($usuario->getId());
 
-            if(!$existingUser) {
-                return false;// Retorna falso se o usuário não existir
+            if (!$existingUser) {
+                return false; // Retorna falso se o usuário não existir
             }
 
             $sql = "UPDATE Usuario SET NomeUsuario = :nomeUsuario, Senha = :senha, Email = :email,
@@ -123,34 +132,39 @@ class UsuarioDAO implements BaseDAO
             WHERE Id = :id";
 
             $stmt = $this->db->prepare($sql);
+            $id = $usuario->getId();
+            $nome = $usuario->getNomeUsuario();
+            $senha = $usuario->getSenha();
+            $email = $usuario->getEmail();
+            $grupoUsuarioId = $usuario->getGrupoUsuarioId();
+            $ativo = $usuario->getAtivo();
 
-            $stmt->bindParam(':id', $usuario->getId());
-            $stmt->bindParam(':nomeUsuario', $usuario->getNomeUsuario());
-            $stmt->bindParam(':senha', $usuario->getSenha());
-            $stmt->bindParam(':email', $usuario->getEmail());
-            $stmt->bindParam(':grupoUsuarioID', $usuario->getGrupoUsuarioId());
-            $stmt->bindParam(':ativo', $usuario->getAtivo());
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':nomeUsuario', $nome);
+            $stmt->bindParam(':senha', $senha);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':grupoUsuarioID', $grupoUsuarioId);
+            $stmt->bindParam(':ativo', $ativo);
 
             $stmt->execute();
 
             return true;
-
         } catch (PDOException $e) {
             // TO-DO: implementar log
             return false;
         }
     }
-   
 
-    public function delete($id) {
-        try{
-            $sql = "DELETE * FROM Usuario WHERE Id = :id";
+    public function delete($id)
+    {
+        try {
+            $sql = "DELETE FROM Usuario WHERE Id = :id";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':id', $id);
             $stmt->execute();
 
             return true;
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             return false;
         }
     }
