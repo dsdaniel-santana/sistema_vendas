@@ -1,35 +1,34 @@
 <?php
 class GrupoUsuario {
-
+    // Propriedades
     private $id;
     private $nome;
-    private $descricao;
+    private $descricao;    
     private $dataCriacao;
     private $dataAtualizacao;
     private $usuarioAtualizacao;
     private $ativo;
 
-
-    public function __construct($id, $nome, $descricao, $dataCriacao = null, $dataAtualizacao = null, $usuarioAtualizacao, $ativo = 1, )
-    {
+    // Construtor
+    public function __construct($id, $nome, $descricao, $dataCriacao, $dataAtualizacao, $ativo = 1) {
         $this->id = $id;
-        $this->nome = $nome;        
+        $this->nome = $nome;
         $this->descricao = $descricao;
-        $this->dataCriacao = $dataCriacao;         
+        $this->dataCriacao = $dataCriacao;
         $this->dataAtualizacao = $dataAtualizacao;
-        $this->usuarioAtualizacao = $usuarioAtualizacao;
+        $this->usuarioAtualizacao = null; // implementar ao gerenciar usuário
         $this->ativo = $ativo;
     }
 
-    public function  getId(){
+    public function getId() {
         return $this->id;
     }
 
-    public function getNome(){
+    public function getNome() {
         return $this->nome;
     }
 
-    public function getdescricacao (){
+    public function getDescricao() {
         return $this->descricao;
     }
 
@@ -41,17 +40,13 @@ class GrupoUsuario {
         return $this->dataAtualizacao;
     }
 
-    public function getUsuarioAtualizacao(){
+    public function getUsuarioAtualizacao() {
         return $this->usuarioAtualizacao;
     }
 
     public function getAtivo() {
         return $this->ativo;
     }
-
-
-
 }
-
 
 ?>
