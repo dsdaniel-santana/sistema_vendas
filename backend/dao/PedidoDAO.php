@@ -5,31 +5,29 @@ require_once '../entity/Pedido.php';
 class PedidoDAO implements BaseDAO {
     private $db;
 
-    public function __construct(){
+    public function __construct() {
         $this->db = Database::getInstance();
     }
-    
-    public function getById($id){
-        //Implementação para obter pedido por ID
-    }        
-    public function getAll(){
-        //Implementação para obter todos os Pedidos
 
-    }        
-    public function create($entity){
-        //Implementação para criar um novo pedido 
-
-    }        
-    public function update($entity){
-        //Implementação para atualizar um pedido
-        //recebendo o id no corpo da requisição
-
+    public function getById($id) {
+        // Implementação pra obter um pedido por ID
     }
-    public function delete($id){
 
-    } 
+    public function getAll() {
+        // Implementação pra obter todos os pedidos
+    }
 
+    public function create($entity) {
+        // Implementação pra criar um pedido novo
+    }
 
+    public function update($entity) {
+        // Implementação pra criar atualizar um pedido
+        // recebendo o id no corpo da requisição
+    }
+
+    public function delete($id) {
+        // Implementação da remoção de um pedido por id
+    }
 }
-
 ?>

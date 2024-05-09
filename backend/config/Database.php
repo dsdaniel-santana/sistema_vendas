@@ -1,9 +1,10 @@
 <?php
-class Database{
+
+class Database {
     private static $instance = null;
 
-    public static function getInstance(){
-        if(self::$instance === null){
+    public static function getInstance() {
+        if(self::$instance === null) {
             $host = 'localhost';
             $dbname = 'sistema_vendas';
             $username = 'root';

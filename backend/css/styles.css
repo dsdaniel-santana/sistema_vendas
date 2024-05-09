@@ -1,8 +1,8 @@
-.footer{
+.footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: rgb(192, 215, 215)    ;
+    background-color: #bcbcbc;
     padding: 20px;
 }
 
@@ -18,4 +18,5 @@
 
 #footer ul li a {
     text-decoration: none;
+    color: #414e5c
 }

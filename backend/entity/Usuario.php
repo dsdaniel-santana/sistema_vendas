@@ -1,6 +1,6 @@
-<?php 
-class Usuario{
-    //Propriedades
+<?php
+class Usuario {
+    // Propriedades
     private $id;
     private $nomeUsuario;
     private $senha;
@@ -9,24 +9,20 @@ class Usuario{
     private $ativo;
     private $dataCriacao;
     private $dataAtualizacao;
-    
-    
-    //Metodo construtor
-    public function __construct($id, $nomeUsuario, $senha, $email, $grupoUsuarioID, $ativo = 1, $dataCriacao = null, $dataAtualizacao = null)
-    {
+
+    // Método Construtor
+    public function __construct($id, $nomeUsuario, $senha, $email, $grupoUsuarioID, $ativo = 1, $dataCriacao = null, $dataAtualizacao = null) {
         $this->id = $id;
-        $this->nomeUsuario = $nomeUsuario;        
-        $this->senha = $senha;        
-        $this->email = $email;        
-        $this->grupoUsuarioID = $grupoUsuarioID;        
-        $this->ativo = $ativo;        
-        $this->dataCriacao = $dataCriacao;         
-        $this->dataAtualizacao = $dataAtualizacao;         
-                
+        $this->nomeUsuario = $nomeUsuario;
+        $this->senha = $senha;
+        $this->email = $email;
+        $this->grupoUsuarioID = $grupoUsuarioID;
+        $this->ativo = $ativo;
+        $this->dataCriacao = $dataCriacao;
+        $this->dataAtualizacao = $dataAtualizacao;
     }
 
-
-    //Getters
+    // Getters
     public function getId() {
         return $this->id;
     }
@@ -58,8 +54,7 @@ class Usuario{
     public function getDataAtualizacao() {
         return $this->dataAtualizacao;
     }
-    //Setters
 
+    // Setters
 }
-
 ?>
