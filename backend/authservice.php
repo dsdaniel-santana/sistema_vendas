@@ -16,6 +16,7 @@ if($type === "register") {
         if($new_password === $confirm_password) {
             $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
 
+            
             $usuario = new Usuario(null, $new_nome, $hashed_password, $new_email, null, null, null, null);    
             $usuarioDAO = new UsuarioDAO();
             $usuarioDAO->create($usuario);
