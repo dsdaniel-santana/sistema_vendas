@@ -1,11 +1,11 @@
 # Sistema de Vendas
-Sistema básico exemplificando as interações de uma aplicação desenvoldiada a partir do seu banco de dados, contendo diagramas de cada camada no seu desenvolvimento.
+Sistema básico exemplificando as interações de uma aplicação desenvolvida a partir do seu banco de dados, contendo diagramas de cada camada do desenvolvimento.
 
 ## Banco de Dados
-O Sistema utliza um banco de dados desenvolvido com [Mysql](https://www.mysql.com/)
+O sistema utiliza um banco de dados desenvolvido com o [MySql](https://www.mysql.com/)
 
 ### Diagrama
-![image](/backend/diagrama.png)
+![image](/banco_de_dados/diagrama_bd.png)
 
 ## Backend
 -- Reservado para o desenvolvimento em PHP
