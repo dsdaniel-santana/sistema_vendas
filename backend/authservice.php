@@ -16,22 +16,16 @@ if($type === "register") {
         if($new_password === $confirm_password) {
             $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
 
-            
             $usuario = new Usuario(null, $new_nome, $hashed_password, $new_email, null, null, null, null);    
             $usuarioDAO = new UsuarioDAO();
-            $usuarioDAO->create($usuario);
             $success = $usuarioDAO->create($usuario);
-            exit();
-
-            if($success){
-                header("Location:index.php");
+            
+            if($success) {
+                header("Location: index.php");
                 exit();
             } else {
-                //tratar falha de registro em BD
+                // Tratar falha de registro em BD
             }
-
-            header("Location: index.php");
-            exit();
         } else {
             // TODO: exibir mensaem de senhas incompatíveis
         }
